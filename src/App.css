@@ -1,0 +1,135 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+
+.main-body {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  background-color: #e6ecf0;
+  min-height: 80rem;
+}
+
+.body {
+  display: flex;
+  flex-direction: column; 
+}
+
+.inner-body {
+  display: flex;
+  flex-direction: row;
+}
+
+.tweet-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 35.375rem;
+  min-height: 10.625rem;
+  background-color: #ffffff;
+}
+
+.tweet-body:hover { 
+  background-color: #f5f8fa;
+  border: #e6ecf0;
+}
+
+.picture {
+  margin-left: 2rem;
+  margin-top: 1.1rem;
+  border-radius: 50%;
+  min-width: 48px;
+  height: 48px;
+}
+
+.name {
+  display: flex;
+  flex-direction: row;
+  margin-left: 1rem;
+  margin-top: 1.2rem;
+  min-width: 85px;
+  height: 17px;
+  font-family: HelveticaNeue;
+  font-size: 14px;
+  font-weight: 700;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.6px;
+  color: #14171a;
+}
+
+.handle {
+  margin-left: 0.75rem;
+  margin-top: 1.3rem;
+  min-width: 128px;
+  height: 16px;
+  font-family: HelveticaNeue;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.6px;
+  color: #75797d;
+}
+
+.tweet {
+  padding: 0.5rem 1rem;
+  min-width: 445px;
+  min-height: 88px;
+  font-family: HelveticaNeue;
+  font-size: 14px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.6px;
+}
+
+.header {
+  min-height: 3rem;
+  background-color: #ffffff;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.search-container {
+  display: 'inline-flex'
+}
+
+.iconInline {
+  margin: 1rem;
+  display: inline-flex;
+}
+
+.actionIcons {
+  padding: 0.5rem 3rem 0.5rem 0;
+}
+
+i.icon-color {
+  color: #657786;
+  cursor: pointer;
+}
+
+i.icon-color:hover {
+  color: #EC6E73;
+}
+
+i.icon-color-active {
+  color: #EC6E73;
+}
+
+.header-padding {
+  padding: 0 2rem 0 2rem;
+}
+
+.profile-pic {
+  min-width: 32px;
+  max-width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.profile-pic-li {
+  padding: 1rem;
+}
