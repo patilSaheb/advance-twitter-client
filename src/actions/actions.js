@@ -47,16 +47,10 @@ export const searchTweets = query => {
     return (dispatch, getState) => {
         const beforeQuery = getState().tweets.searchKeyword;
         dispatch(updateSearchQuery(query));
+        dispatch(clearAllTweets());
         if(beforeQuery !== getState().tweets.searchKeyword) {
-            dispatch(clearAllTweets());
             dispatch(fetchTweets(getState().tweets.searchKeyword));
         }
-        console.log('uhka',getState().tweets.newTweets)
-        // if(getState().tweets.newTweets.length === 0) {
-        //     dispatch(noResults());
-        // }else{
-        //     dispatch(noResults())
-        // }
     }
 }
 

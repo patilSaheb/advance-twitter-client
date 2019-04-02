@@ -6,7 +6,7 @@ import faker from 'faker';
 import { Facebook } from 'react-content-loader';
 import { List, CellMeasurer, CellMeasurerCache } from 'react-virtualized';
 import 'react-virtualized/styles.css';
-import { fetchTweets, searchTweets, clearTweets, displayNoResults } from "./redux-mod/actions";
+import { fetchTweets, searchTweets, clearTweets, displayNoResults } from "./actions/actions";
 import { connect } from "react-redux";
 import {Error, NoTweets} from './components/handlerComponent';
 
@@ -40,14 +40,12 @@ class App extends Component {
     cache.clearAll();
   }
 
-  detectScroll() {
-    if (document.getElementById("v-list")) {
-      var listViewHeight = document.getElementById("v-list").offsetHeight;
-      var currentScrollPosition = document.getElementById("v-list").scrollTop;
-      var totalListHeight = document.getElementById("v-list").scrollHeight;
-      if (listViewHeight + currentScrollPosition === totalListHeight) {
-        this.props.fetchTweets(this.props.searchKeyword);
-      }
+  detectScroll = (e) => {
+    if (e) {
+      const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+       if (bottom) {
+          this.props.fetchTweets(this.props.searchKeyword);
+       }
     }
   }
 
@@ -101,7 +99,6 @@ class App extends Component {
     deferredMeasurementCache={cache}
     rowHeight={cache.rowHeight}
     overscanRowCount={3}
-    onScroll={this.detectScroll}
   />
     return (
       <div className="main-body">
@@ -110,7 +107,7 @@ class App extends Component {
           <div className="container">
             <div className="row">
               <div className="col l2"></div>
-              <div id='list-container' className="col l8">
+              <div id='list-container' className="col l8" onScroll={this.detectScroll}>
                 {noTweets}
                 {content}
                 {preload}

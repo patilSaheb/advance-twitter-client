@@ -5,10 +5,10 @@ import {
     UPDATE_SEARCH_QUERY,
     CLEAR_TWEETS,
     NO_RESULTS
-} from './actions';
+} from '../actions/actions';
 
 const initialState = {
-    searchKeyword: 'photo',
+    searchKeyword: 'images',
     newTweets: [],
     loading: false,
     error: null,
