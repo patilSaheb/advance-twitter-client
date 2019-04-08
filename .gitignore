@@ -7,7 +7,9 @@
 .mov
 .gif
 /src/twit_data.js
+/src/components/infinteScroll.js
 .md
+/serviceWorker.js
 
 # testing
 /coverage
