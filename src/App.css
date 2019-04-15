@@ -1,16 +1,19 @@
+@import "~/node_modules/placeholder-loading/src/scss/placeholder-loading";
+
 * { margin:0; padding:0; box-sizing:border-box; }
 
 .main-body {
   display: flex;
   flex-direction: column;
-  margin-top: 1rem;
   background-color: #e6ecf0;
   min-height: 80rem;
 }
 
-.body {
+.outer-body {
   display: flex;
   flex-direction: column; 
+  width: auto;
+  height: inherit;
 }
 
 .inner-body {
@@ -19,16 +22,14 @@
 }
 
 .tweet-body {
-  display: flex;
-  flex-direction: column;
+  border: 1px solid #e6ecf0;
   min-width: 35.375rem;
-  min-height: 10.625rem;
+  min-height: auto;
   background-color: #ffffff;
 }
 
 .tweet-body:hover { 
   background-color: #f5f8fa;
-  border: #e6ecf0;
 }
 
 .picture {
@@ -40,19 +41,17 @@
 }
 
 .name {
-  display: flex;
-  flex-direction: row;
+  display: inline-table;
   margin-left: 1rem;
   margin-top: 1.2rem;
   min-width: 85px;
-  height: 17px;
   font-family: HelveticaNeue;
   font-size: 14px;
   font-weight: 700;
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
-  letter-spacing: -0.6px;
+  letter-spacing: 0.4px;
   color: #14171a;
 }
 
@@ -72,9 +71,9 @@
 }
 
 .tweet {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 2rem 0.5rem 1rem;
   min-width: 445px;
-  min-height: 88px;
+  min-height: auto;
   font-family: HelveticaNeue;
   font-size: 14px;
   font-weight: 300;
@@ -91,10 +90,6 @@
   position: fixed;
   top: 0;
   width: 100%;
-}
-
-.search-container {
-  display: 'inline-flex'
 }
 
 .iconInline {
@@ -132,4 +127,17 @@ i.icon-color-active {
 
 .profile-pic-li {
   padding: 1rem;
+}
+
+.tweetImage {
+  border-radius: 25px;
+  min-width: 445px;
+  min-height: 88px;
+  max-width: 530px;
+  max-height: auto;
+  height: auto;
+}
+
+.preloader-style {
+  padding: 1.5rem 0 1.5rem 1rem; 
 }

@@ -1,59 +1,29 @@
 import React from 'react';
+import IconRenderer from './iconRenderer';
 
 class TweetFooter extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state = {
-            active: false
+        this.iconObj = {
+            comment: 'comment',//Comment
+            repeat: 'repeat',//Retweet
+            favorite_border: 'favorite',//LikeHeart
+            mail_outline: 'mail'//DirectMessage
         }
     }
 
-    handleClick() { 
-        console.log('clicked');
-    }
-
     render() {
-        return(
+        const icons = this.iconObj;
+        const iconMapper = Object.keys(icons).map(key =>
+            <IconRenderer key={key} name={icons[key]} />
+        )
+
+        return (
             <div className="iconInline">
-            <Comment clickHandler ={this.handleClick.bind(this)}/>
-            <LikeHeart clickHandler ={this.handleClick.bind(this)}/>
-            <Retweet clickHandler ={this.handleClick.bind(this)}/>
-            <DirectMessage clickHandler ={this.handleClick.bind(this)}/>
-          </div>
+                {iconMapper}
+            </div>
         )
     }
-}
-
-const Comment = (props) => {
-    return(
-        <div className="actionIcons" onClick={props.clickHandler}>
-        <i className="material-icons icon-color">comment</i>
-      </div>
-    )
-}
-
-const LikeHeart = (props) => {
-    return(
-        <div className="actionIcons" onClick={props.clickHandler}>
-        <i className="material-icons icon-color">favorite_border</i>
-      </div>
-    )
-}
-
-const Retweet = (props) => {
-    return(
-        <div className="actionIcons" onClick={props.clickHandler}>
-        <i className="material-icons icon-color">repeat</i>
-      </div>
-    )
-}
-
-const DirectMessage = (props) => {
-    return(
-        <div className="actionIcons" onClick={props.clickHandler}>
-        <i className="material-icons icon-color">mail_outline</i>
-      </div>
-    )
 }
 
 export { TweetFooter }

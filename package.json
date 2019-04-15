@@ -4,10 +4,13 @@
   "description": "twitter-handler",
   "dependencies": {
     "faker": "^4.1.0",
+    "placeholder-loading": "^0.2.1",
     "react": "^16.8.2",
+    "react-content-loader": "^4.2.1",
     "react-dom": "^16.8.2",
     "react-js-pull-to-refresh": "^1.2.1",
     "react-materialize": "^3.0.3",
+    "react-modal": "^3.8.1",
     "react-pull-to-refresh": "^1.1.2",
     "react-scripts": "2.1.5",
     "twit": "^2.2.11"
