@@ -1,9 +1,10 @@
-import React, { Component, Fragments} from 'react';
+import React, { Component } from 'react';
 import { TweetBody } from './components/tweet';
 import Header from './components/topHeaderMaterialize';
 import './App.css';
 import faker from 'faker';
 import { Facebook } from 'react-content-loader';
+// import Dialogue from './components/modal';
 
 const styles = {
   "margin": '1.1rem 0 1.1rem 2rem',
@@ -12,17 +13,19 @@ const styles = {
 const MyFacebookLoader = () => <Facebook style={styles}/>
 
 class App extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
       tweets: [],
+      modalContent: null,
+      searchQuery: 'images',
       modalIsOpen: false,
-      searchQuery: 'images'
+      noResults: false
     }
 
-    this.getFakeUser = this.getFakeUser.bind(this);
     this.getFeeds = this.getFeeds.bind(this);
     this.setSearchQuery = this.setSearchQuery.bind(this);
+    this.modalContent = this.modalContent.bind(this);
 
     // Binds our scroll event handler
     window.onscroll = () => {
@@ -36,7 +39,7 @@ class App extends Component {
         window.innerHeight + document.documentElement.scrollTop
         === document.documentElement.offsetHeight
       ) {
-        this.generator().next()
+        this.getFeeds();
       }
     };
   }
@@ -45,41 +48,18 @@ class App extends Component {
     this.generator().next();
   }
 
-  //Twitter feeds fetch
-  addFakeUser() {
-    let arr = [];
-    for (let i = 0; i < 10; i++) {
-      let eachItem = this.fakerCall();
-      arr.push(eachItem);
-    }
-    return arr;
-  }
-
-  fakerCall() {
-    let randomEmail = faker.internet.email(),
-      randomUser = `${faker.name.firstName()} ${faker.name.lastName()}`,
-      randomUsername = faker.internet.domainName(),
-      randomUserpic = faker.internet.avatar()
-    const userObj = {
-      name: randomUser,
-      username: randomUsername,
-      email: randomEmail,
-      image: randomUserpic,
-      tweet: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-    }
-    return userObj;
-  }
-
-  getFakeUser() {
-    let tempArr = this.addFakeUser();
-    let fakeData = this.state.fakerUsers.concat(tempArr);
-    this.setState({ fakerUsers: [...fakeData] });
-  }
-
   setSearchQuery(keyword) {
     this.setState({ searchQuery: keyword, tweets: [] }, () => {
+
       this.generator().next();
     });
+  }
+
+  modalContent(content) {
+    console.log('modal',content);
+    this.setState({modalContent: content},()=>{
+      this.setState({modalIsOpen: !this.state.modalIsOpen})
+    })
   }
 
   getFeeds() {
@@ -93,11 +73,12 @@ class App extends Component {
       })
       .catch(error => {
         console.log(error);
+        this.setState({noResults: !this.state.noResults});
       });
   }
 
   setLoader() {
-    this.setState({ isLoading: true })
+    this.setState({ isLoading: !this.state.isLoading })
   }
 
   unsetLoader() {
@@ -107,11 +88,8 @@ class App extends Component {
   //generator application
   * generator() {
     this.setLoader();
-    // yield setTimeout(() => this.getFeeds(), 0);
-    // yield setTimeout(() => this.unsetLoader(), 0);
-    yield this.getFeeds();
+    yield this.getFeeds()
     yield this.unsetLoader();
-    console.log('called gen');
   }
 
   render() {
@@ -124,7 +102,6 @@ class App extends Component {
               <div className="col l2"></div>
               <div className="col l8">
                 {[...this.state.tweets].map((user, index) => {
-                  console.log('user', user)
                   let name = user.user.name
                   let username = user.user.screen_name
                   let image = user.user.profile_image_url
@@ -132,6 +109,7 @@ class App extends Component {
                   let tweetImg = user.entities.media
                   return (
                     <TweetBody
+                      popOut={this.modalContent}
                       key={index}
                       name={name}
                       username={username}

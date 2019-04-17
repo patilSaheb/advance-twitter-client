@@ -12,7 +12,9 @@ const Image = (props) => {
 
 class Header extends Component {
     _handleKeyDown = (e) => {
-        if (e.key === 'Enter') {
+        const validString = /^[\w\-\s]+$/.test(e.target.value);
+        // console.log(/^[\w\-\s]+$/.test(e.target.value));
+        if (e.key === 'Enter' && validString) {
           this.props.searchCallback(e.target.value);
         }
       }
@@ -33,6 +35,8 @@ class Header extends Component {
                                     <input
                                         placeholder="Search for..."
                                         onKeyDown={this._handleKeyDown}
+                                        pattern="/^[\w\-\s]+$/"
+                                        title="No special characters"
                                     />
                                     <i className="material-icons right">search</i>
                                 </div>

@@ -42,8 +42,8 @@
 
 .name {
   display: inline-table;
-  margin-left: 1rem;
-  margin-top: 1.2rem;
+  padding-left: 1rem;
+  padding-top: 1.2rem;
   min-width: 85px;
   font-family: HelveticaNeue;
   font-size: 14px;
@@ -123,15 +123,17 @@ i.icon-color-active {
   max-width: 32px;
   height: 32px;
   border-radius: 50%;
+  
 }
 
 .profile-pic-li {
   padding: 1rem;
 }
 
-.tweetImage {
-  border-radius: 25px;
-  min-width: 445px;
+.tweetImage  {
+  margin-left: 1rem;
+  margin-top: 0rem;
+  border-radius: 15px;
   min-height: 88px;
   max-width: 530px;
   max-height: auto;

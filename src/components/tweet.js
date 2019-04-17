@@ -17,7 +17,6 @@ const ProfileImage = (props) => {
 }
 
 const TweetImage = (props) => {
-  console.log('props',props)
   return (
     <img src={props.imageSrc} width={props.w} hieght={props.h} alt="Logo" className="tweetImage">
     </img>
@@ -49,17 +48,25 @@ const Tweet = (props) => {
 }
 
 class TweetBody extends React.Component {
+  constructor(props) {
+    super(props);
+     this.popOut = this.popOut.bind(this);
+  }
+
+  popOut = (e) => {
+    console.log('children',this);
+    this.props.popOut(this.props)
+  }
 
   render() {
     let postImage = '';
     if(this.props.postImage){
-      console.log('image',this.props.postImage[0]);
       postImage = <TweetImage imageSrc={this.props.postImage[0].media_url} w={this.props.postImage[0].sizes.small.w} h={this.props.postImage[0].sizes.small.h}/>
     }
     
     return (
       <TweetBox>
-        <div className="inner-body">
+        <div className="inner-body" onClick={this.popOut}>
           <ProfileImage image={this.props.image} />
           <div className="outer-body">
             <div className="inner-body">
