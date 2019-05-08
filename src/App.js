@@ -42,7 +42,6 @@ class App extends Component {
       // * there's an error
       // * it's already loading
       // * there's nothing left to load
-      console.log('info',window.innerHeight + document.documentElement.scrollTop,document.documentElement.offsetHeight)
       // Checks that the page has scrolled to the bottom
       if (
         window.innerHeight + document.documentElement.scrollTop
@@ -55,12 +54,6 @@ class App extends Component {
 
   componentDidMount() {
     this.generator().next();
-    // console.log(this.getListItemHeight());
-  }
-
-  getListItemHeight = () => {
-    console.log("test");
-    console.log(this.listRef);
   }
 
   setSearchQuery(keyword) {
