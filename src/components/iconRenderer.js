@@ -33,7 +33,6 @@ export default class IconRenderer extends Icon {
         this.iconId = this.props.name;
     }
     render() {
-        // super.iconStatus = this.state.status ? "icon-color-active" : "";
         return super.render();
     }
 }

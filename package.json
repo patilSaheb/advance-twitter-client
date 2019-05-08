@@ -4,15 +4,18 @@
   "description": "twitter-handler",
   "dependencies": {
     "faker": "^4.1.0",
+    "immutable": "^4.0.0-rc.12",
     "placeholder-loading": "^0.2.1",
+    "prop-types": "^15.7.2",
     "react": "^16.8.2",
     "react-content-loader": "^4.2.1",
     "react-dom": "^16.8.2",
-    "react-js-pull-to-refresh": "^1.2.1",
     "react-materialize": "^3.0.3",
     "react-modal": "^3.8.1",
-    "react-pull-to-refresh": "^1.1.2",
+    "react-redux": "^7.0.2",
     "react-scripts": "2.1.5",
+    "react-virtualized": "^9.21.0",
+    "redux": "^4.0.1",
     "twit": "^2.2.11"
   },
   "scripts": {

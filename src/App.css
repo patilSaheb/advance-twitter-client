@@ -6,7 +6,6 @@
   display: flex;
   flex-direction: column;
   background-color: #e6ecf0;
-  min-height: 80rem;
 }
 
 .outer-body {
@@ -127,17 +126,20 @@ i.icon-color-active {
 }
 
 .profile-pic-li {
-  padding: 1rem;
+  margin: 1rem 0 0 1rem;
 }
 
 .tweetImage  {
-  margin-left: 1rem;
-  margin-top: 0rem;
-  border-radius: 15px;
-  min-height: 88px;
-  max-width: 530px;
-  max-height: auto;
+  margin-right: 1rem;
   height: auto;
+}
+
+.tweetImage > img {
+  border-radius: 15px;
+  width: 100%;
+  max-width: 470px;
+  height: auto;
+
 }
 
 .preloader-style {
