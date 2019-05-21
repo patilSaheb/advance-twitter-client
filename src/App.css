@@ -1,11 +1,13 @@
-@import "~/node_modules/placeholder-loading/src/scss/placeholder-loading";
-
 * { margin:0; padding:0; box-sizing:border-box; }
+
+html,body {
+  height:100%;
+  background-color: #e6ecf0;
+}
 
 .main-body {
   display: flex;
   flex-direction: column;
-  background-color: #e6ecf0;
 }
 
 .outer-body {
@@ -17,13 +19,13 @@
 
 .inner-body {
   display: flex;
-  flex-direction: row;
+  flex-direction: row nowrap;
 }
 
 .tweet-body {
   border: 1px solid #e6ecf0;
-  min-width: 35.375rem;
-  min-height: auto;
+  width: 100%;
+  max-height: 500px;
   background-color: #ffffff;
 }
 
@@ -37,6 +39,7 @@
   border-radius: 50%;
   min-width: 48px;
   height: 48px;
+  line-height: 1rem;
 }
 
 .name {
@@ -71,8 +74,7 @@
 
 .tweet {
   padding: 0.5rem 2rem 0.5rem 1rem;
-  min-width: 445px;
-  min-height: auto;
+  width: 100%;
   font-family: HelveticaNeue;
   font-size: 14px;
   font-weight: 300;
@@ -117,31 +119,34 @@ i.icon-color-active {
   padding: 0 2rem 0 2rem;
 }
 
-.profile-pic {
+.profile-pic-li {
+  margin: 0 0 0 1rem;
+}
+
+.profile-pic-li > img {
   min-width: 32px;
   max-width: 32px;
   height: 32px;
   border-radius: 50%;
-  
+  line-height: 1rem;
+  vertical-align: text-top;
 }
 
-.profile-pic-li {
-  margin: 1rem 0 0 1rem;
-}
-
-.tweetImage  {
+.tweet-image  {
   margin-right: 1rem;
-  height: auto;
+  overflow: hidden;
 }
 
-.tweetImage > img {
-  border-radius: 15px;
+.tweet-image  > div {
+  border-radius: 10px;
+  line-height: 1rem;
+}
+
+.error,.notweet {
+  text-align: center;
   width: 100%;
-  max-width: 470px;
-  height: auto;
-
 }
 
-.preloader-style {
-  padding: 1.5rem 0 1.5rem 1rem; 
+.iconFix {
+  vertical-align: bottom
 }

@@ -6,97 +6,49 @@ import faker from 'faker';
 import { Facebook } from 'react-content-loader';
 import { List, CellMeasurer, CellMeasurerCache } from 'react-virtualized';
 import 'react-virtualized/styles.css';
+import { fetchTweets, searchTweets, clearTweets, displayNoResults } from "./redux-mod/actions";
+import { connect } from "react-redux";
+import {Error, NoTweets} from './components/handlerComponent';
 
 const styles = {
-  "margin": '1.1rem 0 1.1rem 2rem',
+  "width": "600px",
+  "height": "auto",
+  "padding": "0.5rem",
+  "backgroundColor": "white"
 }
 
 const MyFacebookLoader = () => <Facebook style={styles} />
 
+const cache = new CellMeasurerCache({
+  defaultHeight: 160,
+  defaultWidth: 205,
+  fixedWidth: true
+});
+
 class App extends Component {
   constructor() {
     super()
-    this.state = {
-      tweets: [],
-      modalContent: null,
-      searchQuery: 'endgame',
-      modalIsOpen: false,
-      noResults: false,
-      divHeight: 0,
-    }
-
-    this._cache = new CellMeasurerCache({
-      defaultHeight: 160,
-      fixedWidth: true
-    });
-
-    this.getFeeds = this.getFeeds.bind(this);
-    this.setSearchQuery = this.setSearchQuery.bind(this);
-    this.modalContent = this.modalContent.bind(this);
+  
+    this._avatar = faker.internet.avatar();
     this.rowRenderer = this.rowRenderer.bind(this);
     this.isRowLoaded = this.isRowLoaded.bind(this);
-
-    // Binds our scroll event handler
-    window.onscroll = () => {
-      // Bails early if:
-      // * there's an error
-      // * it's already loading
-      // * there's nothing left to load
-      // Checks that the page has scrolled to the bottom
-      if (
-        window.innerHeight + document.documentElement.scrollTop
-        === document.documentElement.offsetHeight
-      ) {
-        this.getFeeds();
-      }
-    };
+    this.detectScroll = this.detectScroll.bind(this);
   }
 
   componentDidMount() {
-    this.generator().next();
+    this.props.fetchTweets(this.props.searchKeyword);
+    cache.clearAll();
   }
 
-  setSearchQuery(keyword) {
-    this.setState({ searchQuery: keyword, tweets: [] }, () => {
-      this.generator().next();
-    });
-  }
-
-  modalContent(content) {
-    this.setState({ modalContent: content }, () => {
-      this.setState({ modalIsOpen: !this.state.modalIsOpen })
-    })
-  }
-
-  //promises
-  getFeeds() {
-    fetch(`https://twit-be.herokuapp.com/megasearch/${this.state.searchQuery}`)
-      .then(feeds => feeds.json())
-      .then(data => {
-        let stateTweets = this.state.tweets.concat(data.statuses);
-        this.setState({
-          tweets: stateTweets
-        });
-      })
-      .catch(error => {
-        console.log(error);
-        this.setState({ noResults: !this.state.noResults });
-      });
-  }
-
-  setLoader() {
-    this.setState({ isLoading: !this.state.isLoading })
-  }
-
-  unsetLoader() {
-    this.setState({ isLoading: false })
-  }
-
-  //generator
-  * generator() {
-    this.setLoader();
-    yield this.getFeeds()
-    yield this.unsetLoader();
+  detectScroll() {
+    if (document.getElementById("v-list")) {
+      var listViewHeight = document.getElementById("v-list").offsetHeight;
+      var currentScrollPosition = document.getElementById("v-list").scrollTop;
+      var totalListHeight = document.getElementById("v-list").scrollHeight;
+      if (listViewHeight + currentScrollPosition === totalListHeight) {
+        this.props.fetchTweets(this.props.searchKeyword);
+      }
+    }
   }
 
   rowRenderer = ({
@@ -106,29 +58,27 @@ class App extends Component {
     parent
   }) => {
     let content;
-    if (!this.state.tweets[index]) content = <MyFacebookLoader />;
-    else {
-      const { name, screen_name, profile_image_url } = this.state.tweets[index].user;
-      const { media } = this.state.tweets[index].entities;
-      const { text } = this.state.tweets[index];
-      content = < TweetBody
-        key={index}
-        name={name}
-        username={screen_name}
-        tweet={text}
-        image={profile_image_url}
-        postImage={media}
-      />
-    }
+    const { name, screen_name, profile_image_url } = this.props.tweets[index].user;
+    const { media } = this.props.tweets[index].entities;
+    const { text } = this.props.tweets[index];
+    content = < TweetBody
+      key={index}
+      name={name}
+      username={screen_name}
+      tweet={text}
+      image={profile_image_url}
+      postImage={media}
+      className="override-absolute"
+    />
     return (
       <CellMeasurer
         key={key}
-        cache={this._cache}
+        cache={cache}
         parent={parent}
         columnIndex={0}
         rowIndex={index}
       >
-        <div style={style}>
+        <div style={style} >
           {content}
         </div>
       </CellMeasurer>
@@ -136,28 +86,34 @@ class App extends Component {
   }
 
   isRowLoaded({ index }) {
-    return !!this.state.tweets[index];
+    return !!this.props.tweets[index];
   }
 
   render() {
+    const preload = this.props.loading ? <MyFacebookLoader /> : null
+    const noTweets = this.props.noResults ? <NoTweets/> : null;
+    const content = this.props.error !== null ? <Error errMsg={this.props.error}/> : <List
+    id='v-list'
+    width={600}
+    height={700}
+    rowCount={this.props.tweets.length}
+    rowRenderer={this.rowRenderer}
+    deferredMeasurementCache={cache}
+    rowHeight={cache.rowHeight}
+    overscanRowCount={3}
+    onScroll={this.detectScroll}
+  />
     return (
       <div className="main-body">
-        <Header profilePic={faker.internet.avatar()} searchCallback={this.setSearchQuery} />
-        <main role="main">
+        <Header profilePic={this._avatar} searchCallback={this.props.searchTweets} />
+        <main role="main" id='main-div'>
           <div className="container">
             <div className="row">
               <div className="col l2"></div>
-              <div className="col l8">
-                <List
-                  id='v-list'
-                  width={600}
-                  height={700}
-                  rowCount={this.state.tweets.length}
-                  rowRenderer={this.rowRenderer}
-                  deferredMeasurementCache={this._cache}
-                  rowHeight={this._cache.rowHeight}
-                  overscanRowCount={3}
-                />
+              <div id='list-container' className="col l8">
+                {noTweets}
+                {content}
+                {preload}
               </div>
               <div className="col l2"></div>
             </div>
@@ -167,13 +123,32 @@ class App extends Component {
     );
   }
 
-  componentWillUnmount() {
-    this._cache.clearAll();
+  componentDidUpdate(prevProps) {
+    if (prevProps.tweets !== this.props.tweets ) {
+      cache.clearAll();
+    }
   }
 
-  componentDidUpdate() {
-    // this.listComponent.recomputeRowHeights();
+  componentWillUnmount() {
+    this.props.clearTweets();
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    searchKeyword: state.tweets.searchKeyword,
+    tweets: state.tweets.newTweets,
+    loading: state.tweets.loading,
+    error: state.tweets.error,
+    noResults: state.tweets.noResults
+  }
+};
+
+const mapDispatchToProps = {
+  fetchTweets,
+  searchTweets,
+  clearTweets,
+  displayNoResults
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

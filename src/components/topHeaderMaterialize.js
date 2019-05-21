@@ -13,7 +13,6 @@ const Image = (props) => {
 class Header extends Component {
     _handleKeyDown = (e) => {
         const validString = /^[\w\-\s]+$/.test(e.target.value);
-        // console.log(/^[\w\-\s]+$/.test(e.target.value));
         if (e.key === 'Enter' && validString) {
           this.props.searchCallback(e.target.value);
         }
@@ -29,7 +28,7 @@ class Header extends Component {
                 <nav>
                     <div className="nav-wrapper header-padding">
                         <a href="#!" className="brand-logo">Tweeds</a>
-                        <ul className="right ">
+                        <ul className="right hide-on-med-and-down">
                             <li className="search-input-style" >
                                 <div style={styles} id="searchForm">
                                     <input

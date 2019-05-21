@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "description": "twitter-handler",
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
     "faker": "^4.1.0",
     "immutable": "^4.0.0-rc.12",
+    "jquery": "^3.4.1",
     "placeholder-loading": "^0.2.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.2",
@@ -16,6 +18,8 @@
     "react-scripts": "2.1.5",
     "react-virtualized": "^9.21.0",
     "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
     "twit": "^2.2.11"
   },
   "scripts": {
